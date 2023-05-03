@@ -1,11 +1,12 @@
 import numpy as np
-import re
+from savedState import savedState
 
-class defaultPuzzle():
+class defaultPuzzle(savedState):
     def __init__(self):
-        self.initialState = np.array([[1,2,0],[4,5,3],[7,8,6]])
-        self.goalState = np.array([[1,2,3],[4,5,6],[7,8,0]])
-        self.expandedNode = np.zeros((3,3))
+        self.initialState = savedState(np.array([[1,2,0],[4,5,3],[7,8,6]]))
+        self.goalState = savedState(np.array([[1,2,3],[4,5,6],[7,8,0]]))
+        
+        self.expandedNode = savedState(np.zeros((3,3)))
         self.frontier = []
         self.usedOperator = []
         self.expandedOperator = ""
@@ -13,17 +14,17 @@ class defaultPuzzle():
     # print the puzzle in expanded node
     def printPuzzle(self):
         print("The Puzzle in expanded node:")
-        print(self.expandedNode[0])
-        print(self.expandedNode[1])
-        print(self.expandedNode[2])
+        print(self.expandedNode.currentState[0])
+        print(self.expandedNode.currentState[1])
+        print(self.expandedNode.currentState[2])
         
     # print all nodes in the frontier
     def printFrontier(self):
         for number, puzzle in enumerate(self.frontier):
             print("The puzzle ", number+1)
-            print(puzzle[0])
-            print(puzzle[1])
-            print(puzzle[2])
+            print(puzzle.currentState[0])
+            print(puzzle.currentState[1])
+            print(puzzle.currentState[2])
         
     # get the initial frontier, run before everything
     def initialFrontier(self):
@@ -31,7 +32,7 @@ class defaultPuzzle():
         
     # Test if the node equal to the goal state
     def goalTest(self) -> bool:
-        if (np.array_equal(self.expandedNode, self.goalState)): return True
+        if (np.array_equal(self.expandedNode.currentState, self.goalState.currentState)): return True
         
     # get the first array from frontier
     def removeFront(self):
@@ -47,31 +48,35 @@ class defaultPuzzle():
         
     # find the index of number 0, you should not use this directly
     def findIndex(self):
-        return np.where(self.expandedNode == 0)
+        return np.where(self.expandedNode.currentState == 0)
         
     # move 0 up, you should not use this directly
     def moveUp(self, y: int, x: int):
-        tmp = np.copy(self.expandedNode)
+        node = savedState(np.copy(self.expandedNode.currentState))
+        tmp = node.currentState
         tmp[y][x], tmp[y-1][x] = tmp[y-1][x], tmp[y][x]
-        return tmp
+        return node
     
     # move 0 down, you should not use this directly
     def moveDown(self, y: int, x: int):
-        tmp = np.copy(self.expandedNode)
+        node = savedState(np.copy(self.expandedNode.currentState))
+        tmp = node.currentState
         tmp[y][x], tmp[y+1][x] = tmp[y+1][x], tmp[y][x]
-        return tmp
+        return node
     
     # move 0 right, you should not use this directly
     def moveRight(self, y: int, x: int):
-        tmp = np.copy(self.expandedNode)
+        node = savedState(np.copy(self.expandedNode.currentState))
+        tmp = node.currentState
         tmp[y][x], tmp[y][x+1] = tmp[y][x+1], tmp[y][x]
-        return tmp
+        return node
     
     # move 0 left, you should not use this directly
     def moveLeft(self, y: int, x: int):
-        tmp = np.copy(self.expandedNode)
+        node = savedState(np.copy(self.expandedNode.currentState))
+        tmp = node.currentState
         tmp[y][x], tmp[y][x-1] = tmp[y][x-1], tmp[y][x]
-        return tmp
+        return node
 
     # find any possible children of expanded node
     def createChildren(self):

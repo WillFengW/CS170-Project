@@ -1,8 +1,12 @@
 import numpy as np
 
 class savedState():
-    def __init__(self):
-        self.currentState = np.zeros((3,3))
+    def __init__(self, puzzle: np.ndarray):
+        if (puzzle.any()): 
+            self.currentState = np.copy(puzzle)
+        else: 
+            self.currentState = np.zeros((3,3))
+        
         self.usedOperator = []
         self.expandedOperator = ""
         self.Gn = 0
