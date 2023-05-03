@@ -7,6 +7,8 @@ class defaultPuzzle():
         self.goalState = np.array([[1,2,3],[4,5,6],[7,8,0]])
         self.expandedNode = np.zeros((3,3))
         self.frontier = []
+        self.usedOperator = []
+        self.expandedOperator = ""
         
     # print the puzzle in expanded node
     def printPuzzle(self):
@@ -33,7 +35,10 @@ class defaultPuzzle():
         
     # get the first array from frontier
     def removeFront(self):
-        if (self.frontier): self.expandedNode = self.frontier.pop(0)
+        if (self.frontier): 
+            self.expandedNode = self.frontier.pop(0)
+            if (self.usedOperator):
+                self.expandedOperator = self.usedOperator.pop(0)
         else: print("The Frontier is Empty!\n")
         
     # push any children nodes to frontier
@@ -74,21 +79,34 @@ class defaultPuzzle():
         (y, x) = indexs[0][0], indexs[1][0]
         children = []
         
-        if (y == 0):
-            children.append(self.moveDown(y, x))
-        if (y == 1):
-            children.append(self.moveUp(y, x))
-            children.append(self.moveDown(y, x))
-        if (y == 2):
-            children.append(self.moveUp(y, x))
         
-        if (x == 0):
+        if (y == 0 and self.expandedOperator != "down"):
+            children.append(self.moveDown(y, x))
+            self.usedOperator.append("up")
+        if (y == 1):
+            if (self.expandedOperator != "down"):
+                children.append(self.moveDown(y, x))
+                self.usedOperator.append("up")
+            if (self.expandedOperator != "up"):
+                children.append(self.moveUp(y, x))
+                self.usedOperator.append("down")
+        if (y == 2 and self.expandedOperator != "up"):
+            children.append(self.moveUp(y, x))
+            self.usedOperator.append("down")
+            
+        if (x == 0 and self.expandedOperator != "right"):
             children.append(self.moveRight(y, x))
+            self.usedOperator.append("left")
         if (x == 1):
+            if (self.expandedOperator != "right"):
+                children.append(self.moveRight(y, x))
+                self.usedOperator.append("left")
+            if (self.expandedOperator != "left"):
+                children.append(self.moveLeft(y, x))
+                self.usedOperator.append("right")
+        if (x == 2 and self.expandedOperator != "left"):
             children.append(self.moveLeft(y, x))
-            children.append(self.moveRight(y, x))
-        if (x == 2):
-            children.append(self.moveLeft(y, x))
+            self.usedOperator.append("right")
         
         return children
     
