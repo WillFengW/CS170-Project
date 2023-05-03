@@ -6,7 +6,7 @@ class defaultPuzzle(savedState):
         self.initialState = savedState(np.array([[1,2,0],[4,5,3],[7,8,6]]))
         self.goalState = savedState(np.array([[1,2,3],[4,5,6],[7,8,0]]))
         
-        self.expandedNode = savedState(np.zeros((3,3)))
+        self.expandedNode = savedState()
         self.frontier = []
         self.usedOperator = []
         self.expandedOperator = ""
@@ -123,6 +123,7 @@ class defaultPuzzle(savedState):
     
 if __name__ == "__main__":
     d = defaultPuzzle()
+    print(d.expandedNode.currentState)
     d.initialFrontier()
     d.printFrontier()
     d.removeFront()
