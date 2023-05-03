@@ -8,6 +8,7 @@ class defaultPuzzle(savedState):
         
         self.expandedNode = savedState()
         self.frontier = []
+        self.usedStates = []
         self.usedOperator = []
         self.expandedOperator = ""
         
@@ -41,10 +42,17 @@ class defaultPuzzle(savedState):
             if (self.usedOperator):
                 self.expandedOperator = self.usedOperator.pop(0)
         else: print("The Frontier is Empty!\n")
+
+    # remove select state from frontier
+    def removeState(self, i: int):
+        if (self.frontier): 
+            self.frontier.remove(i)
+        else: print("The Frontier is Empty!\n")
         
     # push any children nodes to frontier
     def pushFrontier(self, children: list):
         self.frontier.extend(children)
+        self.usedStates.extend(children)
         
     # find the index of number 0, you should not use this directly
     def findIndex(self):
@@ -53,6 +61,7 @@ class defaultPuzzle(savedState):
     # move 0 up, you should not use this directly
     def moveUp(self, y: int, x: int):
         node = savedState(np.copy(self.expandedNode.currentState))
+        node.Gn = self.expandedNode.Gn + 1
         tmp = node.currentState
         tmp[y][x], tmp[y-1][x] = tmp[y-1][x], tmp[y][x]
         return node
@@ -60,6 +69,7 @@ class defaultPuzzle(savedState):
     # move 0 down, you should not use this directly
     def moveDown(self, y: int, x: int):
         node = savedState(np.copy(self.expandedNode.currentState))
+        node.Gn = self.expandedNode.Gn + 1
         tmp = node.currentState
         tmp[y][x], tmp[y+1][x] = tmp[y+1][x], tmp[y][x]
         return node
@@ -67,6 +77,7 @@ class defaultPuzzle(savedState):
     # move 0 right, you should not use this directly
     def moveRight(self, y: int, x: int):
         node = savedState(np.copy(self.expandedNode.currentState))
+        node.Gn = self.expandedNode.Gn + 1
         tmp = node.currentState
         tmp[y][x], tmp[y][x+1] = tmp[y][x+1], tmp[y][x]
         return node
@@ -74,47 +85,80 @@ class defaultPuzzle(savedState):
     # move 0 left, you should not use this directly
     def moveLeft(self, y: int, x: int):
         node = savedState(np.copy(self.expandedNode.currentState))
+        node.Gn = self.expandedNode.Gn + 1
         tmp = node.currentState
         tmp[y][x], tmp[y][x-1] = tmp[y][x-1], tmp[y][x]
         return node
+
+    # check duplicate or not
+    def checkDuplicate(self, puzzle: np.ndarray):
+        for state in self.usedStates:
+            if (np.array_equal(state.currentState, puzzle)):
+                return False    # duplicate
+        return True     # not duplicate
 
     # find any possible children of expanded node
     def createChildren(self):
         indexs = self.findIndex()
         (y, x) = indexs[0][0], indexs[1][0]
+        up = True
+        down = True
+        right = True
+        left = True
         children = []
         
+        # at top line
+        if (y == 0):
+            up = False
         
-        if (y == 0 and self.expandedOperator != "up"):
-            children.append(self.moveDown(y, x))
-            self.usedOperator.append("down")
-        if (y == 1):
-            if (self.expandedOperator != "up"):
-                children.append(self.moveDown(y, x))
-                self.usedOperator.append("down")
-                
-            if (self.expandedOperator != "down"):
-                children.append(self.moveUp(y, x))
+        # at bottom line
+        if (y == 2):
+            down = False
+
+        # at left line
+        if (x == 0):
+            left = False
+
+        # at right line
+        if (x == 2):
+            right = False
+
+        if (self.expandedOperator == "up"):
+            down = False
+
+        if (self.expandedOperator == "down"):
+            up = False
+
+        if (self.expandedOperator == "right"):
+            left = False
+
+        if (self.expandedOperator == "left"):
+            right = False
+
+        # check dulicate or not
+        if (up):
+            newState = self.moveUp(y, x)
+            if (self.checkDuplicate(newState)):
+                children.append(newState)
                 self.usedOperator.append("up")
-        if (y == 2 and self.expandedOperator != "down"):
-            children.append(self.moveUp(y, x))
-            self.usedOperator.append("up")
-            
-        if (x == 0 and self.expandedOperator != "left"):
-            children.append(self.moveRight(y, x))
-            self.usedOperator.append("right")
-        if (x == 1):
-            if (self.expandedOperator != "left"):
-                children.append(self.moveRight(y, x))
-                self.usedOperator.append("right")
-                
-            if (self.expandedOperator != "right"):
-                children.append(self.moveLeft(y, x))
-                self.usedOperator.append("left")
-        if (x == 2 and self.expandedOperator != "right"):
-            children.append(self.moveLeft(y, x))
-            self.usedOperator.append("left")
         
+        if (down):
+            newState = self.moveUp(y, x)
+            if (self.checkDuplicate(newState)):
+                children.append(newState)
+                self.usedOperator.append("up")
+
+        if (right):
+            newState = self.moveUp(y, x)
+            if (self.checkDuplicate(newState)):
+                children.append(newState)
+                self.usedOperator.append("up")
+
+        if (left):
+            newState = self.moveUp(y, x)
+            if (self.checkDuplicate(newState)):
+                children.append(newState)
+                self.usedOperator.append("up")
         return children
     
     # return expandedNode
