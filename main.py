@@ -1,4 +1,5 @@
 from puzzleCollector import puzzleCollector
+from currentState import currentState
 
 
 def main():
@@ -14,6 +15,13 @@ def main():
         choice = input("Enter your choice: ")
         
         if choice == "1":
+            dp.initialFrontier()
+            dp.removeFront()
+            dp.pushFrontier(dp.createChildren())
+            dp.removeFront()
+            currState = currentState(dp)
+            currState.printAll()
+            if (currState.comparePuzzle(currState.currentState, dp.expandedNode)): print("True")
             subMenu()
             break
         elif choice == "2":
