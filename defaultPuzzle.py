@@ -110,6 +110,10 @@ class defaultPuzzle():
         
         return children
     
+    # return expandedNode
+    def returnExpndNode(self):
+        return self.expandedNode
+    
 if __name__ == "__main__":
     d = defaultPuzzle()
     d.initialFrontier()
