@@ -1,7 +1,7 @@
 import numpy as np
 
 class savedState():
-    def __init__(self,):
+    def __init__(self):
         self.currentState = np.zeros((3,3))
         self.usedOperator = []
         self.expandedOperator = ""
