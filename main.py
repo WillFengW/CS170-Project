@@ -1,5 +1,5 @@
 from puzzleCollector import puzzleCollector
-from currentState import currentState
+from savedState import savedState
 
 
 def main():
@@ -19,9 +19,10 @@ def main():
             dp.removeFront()
             dp.pushFrontier(dp.createChildren())
             dp.removeFront()
-            currState = currentState(dp)
-            currState.printAll()
-            if (currState.comparePuzzle(currState.currentState, dp.expandedNode)): print("True")
+            st = savedState()
+            st.puzzleInitializer(dp.expandedNode)
+            st.printCurrState()
+            print(st.findZero(st.currentState))
             subMenu()
             break
         elif choice == "2":

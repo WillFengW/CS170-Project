@@ -80,33 +80,35 @@ class defaultPuzzle():
         children = []
         
         
-        if (y == 0 and self.expandedOperator != "down"):
+        if (y == 0 and self.expandedOperator != "up"):
             children.append(self.moveDown(y, x))
-            self.usedOperator.append("up")
-        if (y == 1):
-            if (self.expandedOperator != "down"):
-                children.append(self.moveDown(y, x))
-                self.usedOperator.append("up")
-            if (self.expandedOperator != "up"):
-                children.append(self.moveUp(y, x))
-                self.usedOperator.append("down")
-        if (y == 2 and self.expandedOperator != "up"):
-            children.append(self.moveUp(y, x))
             self.usedOperator.append("down")
+        if (y == 1):
+            if (self.expandedOperator != "up"):
+                children.append(self.moveDown(y, x))
+                self.usedOperator.append("down")
+                
+            if (self.expandedOperator != "down"):
+                children.append(self.moveUp(y, x))
+                self.usedOperator.append("up")
+        if (y == 2 and self.expandedOperator != "down"):
+            children.append(self.moveUp(y, x))
+            self.usedOperator.append("up")
             
-        if (x == 0 and self.expandedOperator != "right"):
+        if (x == 0 and self.expandedOperator != "left"):
             children.append(self.moveRight(y, x))
-            self.usedOperator.append("left")
-        if (x == 1):
-            if (self.expandedOperator != "right"):
-                children.append(self.moveRight(y, x))
-                self.usedOperator.append("left")
-            if (self.expandedOperator != "left"):
-                children.append(self.moveLeft(y, x))
-                self.usedOperator.append("right")
-        if (x == 2 and self.expandedOperator != "left"):
-            children.append(self.moveLeft(y, x))
             self.usedOperator.append("right")
+        if (x == 1):
+            if (self.expandedOperator != "left"):
+                children.append(self.moveRight(y, x))
+                self.usedOperator.append("right")
+                
+            if (self.expandedOperator != "right"):
+                children.append(self.moveLeft(y, x))
+                self.usedOperator.append("left")
+        if (x == 2 and self.expandedOperator != "right"):
+            children.append(self.moveLeft(y, x))
+            self.usedOperator.append("left")
         
         return children
     

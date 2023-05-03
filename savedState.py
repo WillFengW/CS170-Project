@@ -1,19 +1,23 @@
-from defaultPuzzle import defaultPuzzle
 import numpy as np
 
-class currentState():
-    def __init__(self, dp: defaultPuzzle):
-        self.currentState = np.copy(dp.expandedNode)
-        self.usedOperator = dp.usedOperator.copy()
-        self.expandedOperator = dp.expandedOperator
+class savedState():
+    def __init__(self,):
+        self.currentState = np.zeros((3,3))
+        self.usedOperator = []
+        self.expandedOperator = ""
         self.Gn = 0
         self.Hn = 0
-        
-    def saveState(self):
-        return self
     
     def returnPuzzle(self):
         return self.currentState
+    
+    def puzzleInitializer(self, puzzle: np.ndarray):
+        self.currentState = np.copy(puzzle)
+        
+    # return index of zero by (y, x) / ([y][x])
+    def findZero(self, puzzle: np.ndarray):
+        indexs = np.where(puzzle == 0)
+        return (indexs[0][0], indexs[1][0])
     
     def comparePuzzle(self, left: np.ndarray, right: np.ndarray):
         if (np.array_equal(left, right)): return True
