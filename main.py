@@ -14,13 +14,9 @@ def main():
         choice = input("Enter your choice: ")
         
         if choice == "1":
-            dp.printPuzzle()
             subMenu()
             break
         elif choice == "2":
-            dp.printPuzzle()
-            dp.setPuzzle()
-            dp.printPuzzle()
             subMenu()
             break
         elif choice == "3":
@@ -35,7 +31,7 @@ def subMenu():
             "1, Uniform Cost Search\n"
             "2, A* with the Misplaced Tile heuristic\n"
             "3, A* with the Euclidean distance heuristic\n"
-            "4, Back to main menu\n"
+            "4, Quit\n"
             "-------------------------------------------\n")
         choice = input("Enter your choice of algorithm: ")
         
@@ -49,7 +45,7 @@ def subMenu():
             print("Using A* with the Euclidean distance heuristic......")
             break
         elif choice == "4":
-            print("Back to previous menu......")
+            print("See you......")
         else:
             print("wrong option!")
     

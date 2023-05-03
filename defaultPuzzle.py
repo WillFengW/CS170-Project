@@ -10,10 +10,18 @@ class defaultPuzzle():
         
     # print the puzzle in expanded node
     def printPuzzle(self):
-        print("The Puzzle:")
+        print("The Puzzle in expanded node:")
         print(self.expandedNode[0])
         print(self.expandedNode[1])
         print(self.expandedNode[2])
+        
+    # print all nodes in the frontier
+    def printFrontier(self):
+        for number, puzzle in enumerate(self.frontier):
+            print("The puzzle ", number+1)
+            print(puzzle[0])
+            print(puzzle[1])
+            print(puzzle[2])
         
     # get the initial frontier, run before everything
     def initialFrontier(self):
@@ -34,7 +42,7 @@ class defaultPuzzle():
         
     # find the index of number 0, you should not use this directly
     def findIndex(self):
-        return np.where(self.initialState == 0)
+        return np.where(self.expandedNode == 0)
         
     # move 0 up, you should not use this directly
     def moveUp(self, y: int, x: int):
@@ -86,3 +94,14 @@ class defaultPuzzle():
     
 if __name__ == "__main__":
     d = defaultPuzzle()
+    d.initialFrontier()
+    d.printFrontier()
+    d.removeFront()
+    d.printPuzzle()
+    d.pushFrontier(d.createChildren())
+    d.printFrontier()
+    d.removeFront()
+    d.printPuzzle()
+    d.pushFrontier(d.createChildren())
+    d.printFrontier()
+    
