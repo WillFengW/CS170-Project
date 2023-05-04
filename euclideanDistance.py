@@ -91,7 +91,7 @@ if __name__ == "__main__":
     e = euclideanDistance()
     result = e.run()
     if(result):
-        print(*e.d.usedOperator, sep = ", ")
+        e.d.printPuzzle()
     else:
         print("no solution")
 

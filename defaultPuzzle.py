@@ -18,6 +18,10 @@ class defaultPuzzle(savedState):
         print(self.expandedNode.currentState[0])
         print(self.expandedNode.currentState[1])
         print(self.expandedNode.currentState[2])
+        print(self.expandedNode.usedOperator)
+        print(self.expandedNode.expandedOperator)
+        print(self.expandedNode.Gn)
+        print(self.expandedNode.Hn)
         
     # print all nodes in the frontier
     def printFrontier(self):
@@ -30,6 +34,7 @@ class defaultPuzzle(savedState):
     # get the initial frontier, run before everything
     def initialFrontier(self):
         self.frontier.append(self.initialState)
+        self.usedStates.append(self.initialState)
         
     # Test if the node equal to the goal state
     def goalTest(self) -> bool:
@@ -62,7 +67,7 @@ class defaultPuzzle(savedState):
     def moveUp(self, y: int, x: int):
         node = savedState(np.copy(self.expandedNode.currentState))
         node.Gn = self.expandedNode.Gn + 1
-        node.usedOperator = self.usedOperator
+        node.usedOperator = self.expandedNode.usedOperator.copy()
         tmp = node.currentState
         tmp[y][x], tmp[y-1][x] = tmp[y-1][x], tmp[y][x]
         return node
@@ -71,7 +76,7 @@ class defaultPuzzle(savedState):
     def moveDown(self, y: int, x: int):
         node = savedState(np.copy(self.expandedNode.currentState))
         node.Gn = self.expandedNode.Gn + 1
-        node.usedOperator = self.usedOperator
+        node.usedOperator = self.expandedNode.usedOperator.copy()
         tmp = node.currentState
         tmp[y][x], tmp[y+1][x] = tmp[y+1][x], tmp[y][x]
         return node
@@ -80,7 +85,7 @@ class defaultPuzzle(savedState):
     def moveRight(self, y: int, x: int):
         node = savedState(np.copy(self.expandedNode.currentState))
         node.Gn = self.expandedNode.Gn + 1
-        node.usedOperator = self.usedOperator
+        node.usedOperator = self.expandedNode.usedOperator.copy()
         tmp = node.currentState
         tmp[y][x], tmp[y][x+1] = tmp[y][x+1], tmp[y][x]
         return node
@@ -89,7 +94,7 @@ class defaultPuzzle(savedState):
     def moveLeft(self, y: int, x: int):
         node = savedState(np.copy(self.expandedNode.currentState))
         node.Gn = self.expandedNode.Gn + 1
-        node.usedOperator = self.usedOperator
+        node.usedOperator = self.expandedNode.usedOperator.copy()
         tmp = node.currentState
         tmp[y][x], tmp[y][x-1] = tmp[y][x-1], tmp[y][x]
         return node
