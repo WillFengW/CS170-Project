@@ -3,7 +3,7 @@ from savedState import savedState
 
 class defaultPuzzle(savedState):
     def __init__(self):
-        self.initialState = savedState(np.array([[1,2,0],[4,5,3],[7,8,6]]))
+        self.initialState = savedState(np.array([[1,2,3],[4,8,0],[7,6,5]]))
         self.goalState = savedState(np.array([[1,2,3],[4,5,6],[7,8,0]]))
         
         self.expandedNode = savedState()
