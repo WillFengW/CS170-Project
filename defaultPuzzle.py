@@ -18,10 +18,10 @@ class defaultPuzzle(savedState):
         print(self.expandedNode.currentState[0])
         print(self.expandedNode.currentState[1])
         print(self.expandedNode.currentState[2])
-        print(self.expandedNode.usedOperator)
-        print(self.expandedNode.expandedOperator)
-        print(self.expandedNode.Gn)
-        print(self.expandedNode.Hn)
+        print("Previous Steps: ", self.expandedNode.usedOperator)
+        print("Last Step: ", self.expandedNode.expandedOperator)
+        print("G(n): ", self.expandedNode.Gn)
+        print("H(n): ", self.expandedNode.Hn)
         
     # print all nodes in the frontier
     def printFrontier(self):
@@ -132,16 +132,16 @@ class defaultPuzzle(savedState):
         if (x == 2):
             right = False
 
-        if (self.expandedOperator == "up"):
+        if (self.expandedNode.expandedOperator == "up"):
             down = False
 
-        if (self.expandedOperator == "down"):
+        if (self.expandedNode.expandedOperator == "down"):
             up = False
 
-        if (self.expandedOperator == "right"):
+        if (self.expandedNode.expandedOperator == "right"):
             left = False
 
-        if (self.expandedOperator == "left"):
+        if (self.expandedNode.expandedOperator == "left"):
             right = False
 
         # check dulicate or not

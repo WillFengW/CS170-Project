@@ -83,7 +83,7 @@ class euclideanDistance():
             self.getMinState(self.d.frontier)
             self.d.pushFrontier(self.d.createChildren())
             self.d.printPuzzle()
-            self.d.printFrontier()
+            #self.d.printFrontier()
             i += 1
         return True
 
@@ -91,6 +91,7 @@ if __name__ == "__main__":
     e = euclideanDistance()
     result = e.run()
     if(result):
+        print("The final solution is:")
         e.d.printPuzzle()
     else:
         print("no solution")
