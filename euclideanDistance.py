@@ -6,11 +6,10 @@ class euclideanDistance(defaultPuzzle):
     def __init__(self):
         d = defaultPuzzle()
 
-    def distance(x1, y1, x2, y2):
-        a = [x1, y1]
-        b = [x2, y2]
-        return math.dist(a, b)
-
+    # get index in 3x3 array by number
+    # [1, 2, 3]
+    # [4, 5, 6]
+    # [7, 8, 9]
     def getCorrectPosition(self, n: int):
         if (n == 1):
             return [0, 0]
@@ -39,7 +38,7 @@ class euclideanDistance(defaultPuzzle):
         if (n == 9):
             return [2, 2]
             
-
+    # getHn base on the distance from wrong puzzle to the correct puzzle
     def getHn(self, puzzle: np.ndarray):
         sum = 0
         correctNumber = 1
@@ -52,6 +51,8 @@ class euclideanDistance(defaultPuzzle):
                     sum += math.dist(a, b)
         return sum
 
+    # get the state that have lowest cost in frontier, then remove it from frontier
+    # and let it become expandedNode
     def getMinState(self, states: defaultPuzzle.frontier):
         self.d.expandedNode = states[0]
         minIndex = 0
@@ -64,6 +65,7 @@ class euclideanDistance(defaultPuzzle):
             i += 1
         self.d.removeState(minIndex)
 
+    # run the algorithm
     def run(self):
         self.d.initialFrontier()
         while (not self.d.goalTest()):
