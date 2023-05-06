@@ -2,6 +2,7 @@ from puzzleCollector import puzzleCollector
 from savedState import savedState
 
 
+n = 8 # 8-puzzle
 def main():
     choice = ""
     dp = puzzleCollector()
