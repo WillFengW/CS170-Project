@@ -4,8 +4,8 @@ from savedState import savedState
 from defaultPuzzle import defaultPuzzle
 
 class misplacedTile():
-    def __init__(self):
-        self.df = defaultPuzzle()
+    def __init__(self, puzzle: np.ndarray):
+        self.df = defaultPuzzle(puzzle)
 
     # get the number of misplaced tiles
     def getMatrixDiff(self, matrix: np.ndarray):
@@ -44,13 +44,16 @@ class misplacedTile():
         i = 1
         while (not self.df.goalTest()):
             if not self.df.frontier:
+                print("no solution")
                 return False
-            print(i, " round")
+            print(" ")
             self.getMinState()
             self.df.pushFrontier(self.df.createChildren())
             self.df.printPuzzle()
             # self.d.printFrontier()
             i += 1
+        print("The final solution is: ", self.df.expandedNode.usedOperator)
+        print("Total node: ", self.df.nodeCount)
         return True
 
 
