@@ -2,26 +2,26 @@ import numpy as np
 from savedState import savedState
 
 class defaultPuzzle(savedState):
-    def __init__(self):
-        self.initialState = savedState(np.array([[1,2,3],[4,8,0],[7,6,5]]))
+    def __init__(self, puzzle: np.ndarray):
+        self.initialState = savedState(puzzle)
         self.goalState = savedState(np.array([[1,2,3],[4,5,6],[7,8,0]]))
-        
         self.expandedNode = savedState()
         self.frontier = []
         self.usedStates = []
         self.usedOperator = []
         self.expandedOperator = ""
+        self.nodeCount = 1
         
     # print the puzzle in expanded node
     def printPuzzle(self):
-        print("The Puzzle in expanded node:")
+        print("The best state to expand with g(n) = ", self.expandedNode.Gn, " and h(n) = ", self.expandedNode.Hn, " is...")
         print(self.expandedNode.currentState[0])
         print(self.expandedNode.currentState[1])
         print(self.expandedNode.currentState[2])
-        print("Previous Steps: ", self.expandedNode.usedOperator)
-        print("Last Step: ", self.expandedNode.expandedOperator)
-        print("G(n): ", self.expandedNode.Gn)
-        print("H(n): ", self.expandedNode.Hn)
+        #print("Previous Steps: ", self.expandedNode.usedOperator)
+        #print("Last Step: ", self.expandedNode.expandedOperator)
+        #print("G(n): ", self.expandedNode.Gn)
+        #print("H(n): ", self.expandedNode.Hn)
         
     # print all nodes in the frontier
     def printFrontier(self):
@@ -38,7 +38,10 @@ class defaultPuzzle(savedState):
         
     # Test if the node equal to the goal state
     def goalTest(self) -> bool:
-        if (np.array_equal(self.expandedNode.currentState, self.goalState.currentState)): return True
+        for state in self.frontier:
+            if (np.array_equal(state.currentState, self.goalState.currentState)):
+                self.expandedNode = state
+                return True
         
     # get the first array from frontier
     def removeFront(self):
@@ -58,6 +61,7 @@ class defaultPuzzle(savedState):
     def pushFrontier(self, children: list):
         self.frontier.extend(children)
         self.usedStates.extend(children)
+        self.nodeCount += len(children)
         
     # find the index of number 0, you should not use this directly
     def findIndex(self):
@@ -147,14 +151,14 @@ class defaultPuzzle(savedState):
         # check dulicate or not
         if (up):
             newState = self.moveUp(y, x)
-            if (self.checkDuplicate(newState)):
+            if (self.checkDuplicate(newState.currentState)):
                 newState.usedOperator.append("up")
                 newState.expandedOperator = "up"
                 children.append(newState)
         
         if (down):
             newState = self.moveDown(y, x)
-            if (self.checkDuplicate(newState)):
+            if (self.checkDuplicate(newState.currentState)):
                 newState.usedOperator.append("down")
                 newState.expandedOperator = "down"
                 children.append(newState)
@@ -162,14 +166,14 @@ class defaultPuzzle(savedState):
 
         if (right):
             newState = self.moveRight(y, x)
-            if (self.checkDuplicate(newState)):
+            if (self.checkDuplicate(newState.currentState)):
                 newState.usedOperator.append("right")
                 newState.expandedOperator = "right"
                 children.append(newState)
 
         if (left):
             newState = self.moveLeft(y, x)
-            if (self.checkDuplicate(newState)):
+            if (self.checkDuplicate(newState.currentState)):
                 newState.usedOperator.append("left")
                 newState.expandedOperator = "left"
                 children.append(newState)
