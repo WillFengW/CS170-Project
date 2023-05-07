@@ -16,14 +16,8 @@ class puzzleCollector(defaultPuzzle):
             for num_str in row.split():
                 num = int(num_str)
                 row_numbers.append(num)
-        self.initialState = np.array(row_numbers).reshape(3, 3)  #ref: https://stackoverflow.com/questions/28205805/how-do-i-create-3x3-matrices
+        self.initialState = savedState(np.array(row_numbers).reshape(3, 3))  #ref: https://stackoverflow.com/questions/28205805/how-do-i-create-3x3-matrices
         return self.initialState
-
-
-if __name__ == "__main__":
-    c = puzzleCollector()
-    c.setPuzzle()
-    c.expandedNode.printCurrState()
 
 
         
