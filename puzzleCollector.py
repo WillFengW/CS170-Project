@@ -1,20 +1,24 @@
 import numpy as np
-import re
 from defaultPuzzle import defaultPuzzle
+from savedState import savedState
+
 
 class puzzleCollector(defaultPuzzle):
     def __init__(self):
         super().__init__()
-        
-    # get the user input
+
     def setPuzzle(self):
-        print("Enter your puzzle, use a zero to represent the blank")
-        row = input("Enter the first row, use space or tabs between numbers: ")
-        self.initialState[0] = [int(i) for i in re.findall(r'\b\d+\b', row)]
-        row = input("Enter the second row, use space or tabs between numbers: ")
-        self.initialState[1] = [int(i) for i in re.findall(r'\b\d+\b', row)]
-        row = input("Enter the third row, use space or tabs between numbers: ")
-        self.initialState[2] = [int(i) for i in re.findall(r'\b\d+\b', row)]
+    # get the user input
+        row_numbers = []
+        print("Enter your puzzle, use a zero to represent the blank (numbers cannot be repeated)")
+        for i in range(3):
+            row = input(f"Enter the {i + 1} row, use space or tabs between numbers: ")
+            for num_str in row.split():
+                num = int(num_str)
+                row_numbers.append(num)
+        self.initialState = savedState(np.array(row_numbers).reshape(3, 3))  #ref: https://stackoverflow.com/questions/28205805/how-do-i-create-3x3-matrices
+        return self.initialState
+
 
         
         
