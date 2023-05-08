@@ -5,6 +5,7 @@ from uniformCost import UniformCostSearch
 from euclideanDistance import euclideanDistance
 from misplacedTile import misplacedTile
 import numpy as np
+import time
 
 def defaultPuzzleList():
     puzzleList = []
@@ -66,17 +67,23 @@ def subMenu(puzzle: np.ndarray):
         if choice == "1":
             print("Using Uniform Cost Search......")
             ucs = UniformCostSearch(puzzle)
+            start_time = time.time()
             ucs.run()
+            print("--- %s seconds used ---" % (time.time() - start_time))
             break
         elif choice == "2":
             print("Using A* with the Misplaced Tile heuristic......")
             m = misplacedTile(puzzle)
+            start_time = time.time()
             m.run()
+            print("--- %s seconds used ---" % (time.time() - start_time))
             break
         elif choice == "3":
             print("Using A* with the Euclidean distance heuristic......")
             e = euclideanDistance(puzzle)
+            start_time = time.time()
             e.run()
+            print("--- %s seconds used ---" % (time.time() - start_time))
             break
         elif choice == "4":
             print("See you......")
