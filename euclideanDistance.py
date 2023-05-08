@@ -70,6 +70,7 @@ class euclideanDistance():
                 i += 1
         #print("minIndex: ", minIndex + 1)       
         self.d.removeState(minIndex)
+
         
 
     # run the algorithm
@@ -89,6 +90,7 @@ class euclideanDistance():
             i += 1
         print("The final solution is: ", self.d.expandedNode.usedOperator)
         print("Total node: ", self.d.nodeCount)
+        print("The Max Queue Size: ", self.d.maxSize)
         return True
 
 if __name__ == "__main__":

@@ -7,6 +7,7 @@ class defaultPuzzle(savedState):
         self.goalState = savedState(np.array([[1,2,3],[4,5,6],[7,8,0]]))
         self.expandedNode = savedState()
         self.frontier = []
+        self.maxSize = 0
         self.usedStates = []
         self.usedOperator = []
         self.expandedOperator = ""
@@ -58,6 +59,9 @@ class defaultPuzzle(savedState):
         self.frontier.extend(children)
         self.usedStates.extend(children)
         self.nodeCount += len(children)
+        sizeQ = len(self.frontier)
+        if sizeQ > self.maxSize: self.maxSize = sizeQ
+        
         
     # find the index of number 0, you should not use this directly
     def findIndex(self):

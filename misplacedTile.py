@@ -54,6 +54,7 @@ class misplacedTile():
             i += 1
         print("The final solution is: ", self.df.expandedNode.usedOperator)
         print("Total node: ", self.df.nodeCount)
+        print("The Max Queue Size: ", self.df.maxSize)
         return True
 
 

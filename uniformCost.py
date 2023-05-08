@@ -15,6 +15,8 @@ class UniformCostSearch():
             while insert_pos < len(self.df.frontier) and self.df.frontier[insert_pos].Gn <= child.Gn:
                 insert_pos += 1
             self.df.frontier.insert(insert_pos, child)
+        sizeQ = len(self.df.frontier)
+        if sizeQ > self.df.maxSize: self.df.maxSize = sizeQ
 
 
     # uniform cost search algorithm (no need to consider costs in this case)
@@ -28,6 +30,7 @@ class UniformCostSearch():
             if self.df.goalTest():
                 print("The final solution is: ", self.df.expandedNode.usedOperator)
                 print("Total node: ", self.df.nodeCount)
+                print("The Max Queue Size: ", self.df.maxSize)
                 return True
             # generate children nodes
             children = self.df.createChildren()

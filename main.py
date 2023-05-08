@@ -9,14 +9,15 @@ import time
 
 def defaultPuzzleList():
     puzzleList = []
-    trival = np.array([[1, 2, 3], [4, 8, 0], [7, 6, 5]])
+    trival = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 0]])
     veryEasy = np.array([[1, 2, 3], [4, 5, 6], [7, 0, 8]])
     easy = np.array([[1, 2, 0], [4, 5, 3], [7, 8, 6]])
     doable = np.array([[0, 1, 2], [4, 5, 3], [7, 8, 6]])
     oh_Boy = np.array([[8, 7, 1], [6, 0, 2], [5, 4, 3]])
     impossible = np.array([[1, 2, 3], [4, 5, 6], [8, 7, 0]])
+    example = np.array([[1, 2, 3], [4, 8, 0], [7, 6, 5]])
     puzzleList.extend(
-        [trival, veryEasy, easy, doable, oh_Boy, impossible])  # Use extend instead of append for multiple elements
+        [trival, veryEasy, easy, doable, oh_Boy, impossible, example])  # Use extend instead of append for multiple elements
     return puzzleList
 
 def printDefaultPuzzles(puzzleList):
