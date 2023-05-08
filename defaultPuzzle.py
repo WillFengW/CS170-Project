@@ -1,5 +1,6 @@
 import numpy as np
 from savedState import savedState
+from Tree import Tree
 
 class defaultPuzzle(savedState):
     def __init__(self, puzzle: np.ndarray):
@@ -8,6 +9,7 @@ class defaultPuzzle(savedState):
         self.expandedNode = savedState()
         self.frontier = []
         self.usedStates = []
+        self.usedStatesTree = Tree()
         self.usedOperator = []
         self.expandedOperator = ""
         self.nodeCount = 1
@@ -35,6 +37,7 @@ class defaultPuzzle(savedState):
     def initialFrontier(self):
         self.frontier.append(self.initialState)
         self.usedStates.append(self.initialState)
+        self.usedStatesTree.addNode(self.initialState.currentState)
         
     # Test if the node equal to the goal state
     def goalTest(self) -> bool:
@@ -61,6 +64,8 @@ class defaultPuzzle(savedState):
     def pushFrontier(self, children: list):
         self.frontier.extend(children)
         self.usedStates.extend(children)
+        for child in children:
+            self.usedStatesTree.addNode(child.currentState)
         self.nodeCount += len(children)
         
     # find the index of number 0, you should not use this directly
@@ -105,10 +110,16 @@ class defaultPuzzle(savedState):
 
     # check duplicate or not
     def checkDuplicate(self, puzzle: np.ndarray):
+        if self.usedStatesTree.findNode(puzzle):
+            return False
+        else:
+            return True
+        '''
         for state in self.usedStates:
             if (np.array_equal(state.currentState, puzzle)):
                 return False    # duplicate
         return True     # not duplicate
+        '''
 
     # find any possible children of expanded node
     def createChildren(self):

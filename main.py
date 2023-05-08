@@ -5,6 +5,7 @@ from uniformCost import UniformCostSearch
 from euclideanDistance import euclideanDistance
 from misplacedTile import misplacedTile
 import numpy as np
+import cProfile
 
 def defaultPuzzleList():
     puzzleList = []
