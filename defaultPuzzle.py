@@ -18,10 +18,6 @@ class defaultPuzzle(savedState):
         print(self.expandedNode.currentState[0])
         print(self.expandedNode.currentState[1])
         print(self.expandedNode.currentState[2])
-        #print("Previous Steps: ", self.expandedNode.usedOperator)
-        #print("Last Step: ", self.expandedNode.expandedOperator)
-        #print("G(n): ", self.expandedNode.Gn)
-        #print("H(n): ", self.expandedNode.Hn)
         
     # print all nodes in the frontier
     def printFrontier(self):
@@ -103,12 +99,13 @@ class defaultPuzzle(savedState):
         tmp[y][x], tmp[y][x-1] = tmp[y][x-1], tmp[y][x]
         return node
 
-    # check duplicate or not
     def checkDuplicate(self, puzzle: np.ndarray):
-        for state in self.usedStates:
-            if (np.array_equal(state.currentState, puzzle)):
-                return False    # duplicate
-        return True     # not duplicate
+        puzzle_hash = hash(puzzle.tostring())  # Generate a hash value for the puzzle
+        if puzzle_hash in self.usedStates:
+            return False  # Duplicate
+        else:
+            self.usedStates.append(puzzle_hash)
+            return True  # Not duplicate
 
     # find any possible children of expanded node
     def createChildren(self):
