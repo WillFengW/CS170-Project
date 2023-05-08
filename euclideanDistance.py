@@ -3,8 +3,9 @@ import math
 from defaultPuzzle import defaultPuzzle
 
 class euclideanDistance():
-    def __init__(self):
-        self.d = defaultPuzzle()
+    def __init__(self, puzzle: np.ndarray):
+        self.d = defaultPuzzle(puzzle)
+
 
     # get index in 3x3 array by number
     # [1, 2, 3]
@@ -67,7 +68,7 @@ class euclideanDistance():
                     self.d.expandedNode = state
                     minIndex = i
                 i += 1
-        print("minIndex: ", minIndex + 1)       
+        #print("minIndex: ", minIndex + 1)       
         self.d.removeState(minIndex)
         
 
@@ -78,13 +79,16 @@ class euclideanDistance():
         i = 1
         while (not self.d.goalTest()):
             if not self.d.frontier:
+                print("no solution")
                 return False
-            print(i," round")
+            print(" ")
             self.getMinState(self.d.frontier)
             self.d.pushFrontier(self.d.createChildren())
             self.d.printPuzzle()
             #self.d.printFrontier()
             i += 1
+        print("The final solution is: ", self.d.expandedNode.usedOperator)
+        print("Total node: ", self.d.nodeCount)
         return True
 
 if __name__ == "__main__":

@@ -11,11 +11,11 @@ def defaultPuzzleList():
     trival = np.array([[1, 2, 3], [4, 8, 0], [7, 6, 5]])
     veryEasy = np.array([[1, 2, 3], [4, 5, 6], [7, 0, 8]])
     easy = np.array([[1, 2, 0], [4, 5, 3], [7, 8, 6]])
-    oh_Boy = np.array([[8, 7, 1], [6, 0, 2], [5, 4, 3]])
     doable = np.array([[0, 1, 2], [4, 5, 3], [7, 8, 6]])
+    oh_Boy = np.array([[8, 7, 1], [6, 0, 2], [5, 4, 3]])
     impossible = np.array([[1, 2, 3], [4, 5, 6], [8, 7, 0]])
     puzzleList.extend(
-        [trival, veryEasy, easy, oh_Boy, doable, impossible])  # Use extend instead of append for multiple elements
+        [trival, veryEasy, easy, doable, oh_Boy, impossible])  # Use extend instead of append for multiple elements
     return puzzleList
 
 def printDefaultPuzzles(puzzleList):
@@ -26,6 +26,7 @@ def printDefaultPuzzles(puzzleList):
     return int(user_input)
 
 def main():
+    puzzle_choice = 0
     choice = ""
     while choice != "3":
         print("Welcome to Team_22's 8-puzzle solver.\n"
@@ -39,12 +40,10 @@ def main():
         if choice == "1":
             puzzles = defaultPuzzleList()
             puzzle_choice = printDefaultPuzzles(puzzles)
-            dp.initialState = savedState(puzzles[puzzle_choice-1])
-            subMenu(dp)
+            subMenu(puzzles[puzzle_choice-1])
             break
         elif choice == "2":
-            dp.initialState = dp.setPuzzle()
-            subMenu(dp)
+            subMenu(dp.setPuzzle())
             break
         elif choice == "3":
             print("See you!")
@@ -52,7 +51,7 @@ def main():
             print("wrong option!")
 
 
-def subMenu(dp):
+def subMenu(puzzle: np.ndarray):
     choice = ""
     while choice != "4":
         print("\n-------------------------------------------\n"
@@ -66,24 +65,17 @@ def subMenu(dp):
 
         if choice == "1":
             print("Using Uniform Cost Search......")
-            ucs = UniformCostSearch()
-            ucs.initialState =dp.initialState
-            result = ucs.run()
-            if result:
-                print("Goal!!")
-            else:
-                print(ucs.initialState, " is impossible to solve.")
+            ucs = UniformCostSearch(puzzle)
+            ucs.run()
             break
         elif choice == "2":
             print("Using A* with the Misplaced Tile heuristic......")
-            m = misplacedTile()
-            m.initialState = dp.initialState
+            m = misplacedTile(puzzle)
             m.run()
             break
         elif choice == "3":
             print("Using A* with the Euclidean distance heuristic......")
-            e = euclideanDistance()
-            e.initialState = dp.initialState
+            e = euclideanDistance(puzzle)
             e.run()
             break
         elif choice == "4":
