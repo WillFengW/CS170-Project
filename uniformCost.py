@@ -24,14 +24,14 @@ class UniformCostSearch():
         # set initial state
         self.df.initialFrontier()
         while self.df.frontier:
-            self.df.removeFront()
-            self.df.printPuzzle()
             # check if goal state is reached
             if self.df.goalTest():
                 print("The final solution is: ", self.df.expandedNode.usedOperator)
                 print("Total node: ", self.df.nodeCount)
                 print("The Max Queue Size: ", self.df.maxSize)
                 return True
+            self.df.removeFront()
+            self.df.printPuzzle()
             # generate children nodes
             children = self.df.createChildren()
             # add children nodes to frontier
